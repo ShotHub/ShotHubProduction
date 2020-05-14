@@ -141,7 +141,7 @@ class App extends React.Component {
 
 	render() {
 		return (
-			<Router hashType="slash">
+			<Router>
 				<div>
 					<MainNav />
 					<Switch>

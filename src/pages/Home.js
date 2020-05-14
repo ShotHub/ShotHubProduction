@@ -16,6 +16,8 @@ export function Home() {
 					a location, and we do the rest.<br />
 					<br />
 					Go to Search to find photo spots!
+					<br /> 
+					HEllo
 				</h5>
 			</div>
 		</Container>
