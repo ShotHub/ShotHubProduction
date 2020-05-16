@@ -1,5 +1,4 @@
 import React from 'react';
-import './App.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { MainNav } from './components/MainNav';
 import { Saved } from './pages/Saved';
@@ -8,6 +7,7 @@ import Search from './pages/Search';
 import { MapPage } from './pages/MapPage';
 import { Feed } from './pages/Feed';
 import { Nav2 } from './components/Nav2';
+import './App.css';
 const Flickr = require('flickr-sdk');
 
 class App extends React.Component {
@@ -17,7 +17,8 @@ class App extends React.Component {
 			lat: null,
 			lon: null,
 			photos: [],
-			spots: []
+			spots: [],
+			isLoading: false
 		};
 	}
 
@@ -71,7 +72,8 @@ class App extends React.Component {
 		}
 
 		this.setState({
-			spots: spots
+			spots: spots,
+			isLoading: false
 		});
 
 		console.log('state.spots: ' + this.state.spots);
@@ -84,59 +86,66 @@ class App extends React.Component {
 
 		var number = 1;
 
-		flickr.photos //searching for photos near the inputted latitude and longitude
-			.search({
-				has_geo: '1',
-				lat: this.state.lat,
-				lon: this.state.lon,
-				radius: '3',
-				radius_units: 'km',
-				content_type: '1',
-				safe_search: '1',
-				per_page: per_page,
-				page: 1
-			})
-			.then((res) => {
-				//using the response to get the location of each individual phot
-				res.body.photos.photo.forEach((photo) => {
-					flickr.photos.geo
-						.getLocation({
-							photo_id: photo.id,
-							format: 'json'
-						})
-						.then((res) => {
-							//give each photo their lat and lon
-							photo.lat = JSON.parse(res.body.photo.location.latitude);
-							photo.lon = JSON.parse(res.body.photo.location.longitude);
+		this.setState(
+			{
+				isLoading: true
+			},
+			() => {
+				flickr.photos //searching for photos near the inputted latitude and longitude
+					.search({
+						has_geo: '1',
+						lat: this.state.lat,
+						lon: this.state.lon,
+						radius: '3',
+						radius_units: 'km',
+						content_type: '1',
+						safe_search: '1',
+						per_page: per_page,
+						page: 1
+					})
+					.then((res) => {
+						//using the response to get the location of each individual phot
+						res.body.photos.photo.forEach((photo) => {
+							flickr.photos.geo
+								.getLocation({
+									photo_id: photo.id,
+									format: 'json'
+								})
+								.then((res) => {
+									//give each photo their lat and lon
+									photo.lat = JSON.parse(res.body.photo.location.latitude);
+									photo.lon = JSON.parse(res.body.photo.location.longitude);
 
-							//generate the distance between the search lat and lon and each photo and store it in the photo object
-							photo.distance = this.getDistance(
-								this.state.lat,
-								this.state.lon,
-								photo.lat,
-								photo.lon
-							).toFixed(2);
+									//generate the distance between the search lat and lon and each photo and store it in the photo object
+									photo.distance = this.getDistance(
+										this.state.lat,
+										this.state.lon,
+										photo.lat,
+										photo.lon
+									).toFixed(2);
 
-							//add each photo to photos in state
-							this.setState((prevState) => ({
-								photos: [ ...prevState.photos, photo ]
-							}));
+									//add each photo to photos in state
+									this.setState((prevState) => ({
+										photos: [ ...prevState.photos, photo ]
+									}));
 
-							//only generate spots when the length of the photos array is equal to the number of photos we searched the API for
-							if (this.state.photos.length === per_page) {
-								this.generateSpots(number);
-							}
-						})
-						//catch any errors
-						.catch(function(err) {
-							console.log('Error in photo.geo.getlocation: ', err);
+									//only generate spots when the length of the photos array is equal to the number of photos we searched the API for
+									if (this.state.photos.length === per_page) {
+										this.generateSpots(number);
+									}
+								})
+								//catch any errors
+								.catch(function(err) {
+									console.log('Error in photo.geo.getlocation: ', err);
+								});
 						});
-				});
-			})
-			//catch any errors
-			.catch(function(err) {
-				console.log('Error in flickr.photos.search', err);
-			});
+					})
+					//catch any errors
+					.catch(function(err) {
+						console.log('Error in flickr.photos.search', err);
+					});
+			}
+		);
 	};
 
 	render() {
@@ -163,6 +172,7 @@ class App extends React.Component {
 								lon={this.state.lon}
 								photo={this.state.spots}
 								callApi={() => this.callApi()}
+								isLoading={this.state.isLoading}
 							/>
 						</Route>
 					</Switch>

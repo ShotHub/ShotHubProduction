@@ -21,6 +21,10 @@ export class MapPage extends React.Component {
 		});	
 	}
 
+	componentDidMount(){
+		document.title = 'ShotHub | Map';
+	}
+
 	render() {
 		return (
 			<div>

@@ -55,6 +55,7 @@ class Search extends React.Component {
 
 	//calls position when the page is loaded
 	componentDidMount(){
+		document.title = 'ShotHub | Search';
 		this.position();
 	} 
 

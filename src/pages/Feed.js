@@ -2,6 +2,7 @@ import React from 'react';
 import { Row, Col, Card, Carousel, Container } from 'react-bootstrap';
 import { MdFavoriteBorder } from 'react-icons/md';
 import { ControlledCarousel } from '../components/ControlledCarousel';
+import { Spinner } from 'react-bootstrap';
 
 export class Feed extends React.Component {
 	constructor(props) {
@@ -17,7 +18,6 @@ export class Feed extends React.Component {
 	UNSAFE_componentWillMount() {
 		this.setState({
 			spots: this.props.photo,
-			disabledButtons: Array(this.props.photo.length).fill(false),
 		});
 	}
 
@@ -48,10 +48,20 @@ export class Feed extends React.Component {
 		});
 	};
 
+	componentDidMount() {
+		document.title = 'ShotHub | Feed';
+		this.setState({
+			disabledButtons: Array(this.props.photo.length).fill(false),
+		})
+	}
+
 	render() {
 		return (
 			<Container className="containerMain">
 				{this.props.lat ? (
+					this.props.isLoading ? (
+						<Spinner className="feed-spinner" animation="border" variant="primary" />
+					) : (
 					<div>
 						<Row className="mainHeader">
 							<Col md={6} className="left">
@@ -82,7 +92,8 @@ export class Feed extends React.Component {
 								//mapping each picture to a card which takes up a third of the screen on pc and 100% of the screen on mobile
 								return (
 									<Card as={Col} key={i} md={6} lg={3} sm={12}>
-										{(() => {
+										{(() => { 
+											
 											return (
 												<Carousel fade="true" interval="100000000000000000">
 													{spot.map((photo, k) => {
@@ -127,7 +138,9 @@ export class Feed extends React.Component {
 								);
 							})}
 						</Row>
+
 					</div>
+					)
 				) : (
 					<div>
 						<br />

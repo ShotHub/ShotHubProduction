@@ -9,12 +9,13 @@ export class Saved extends React.Component {
 
 		this.state = {
 			spots: [],
-			display: 'feed',
-			update: 0
+
+			log: [],
 		};
 	}
 
 	componentDidMount() {
+		document.title = 'ShotHub | Saved';
 		for (let i = 0; i < localStorage.length; i++) {
 			let key = localStorage.key(i);
 
@@ -28,10 +29,8 @@ export class Saved extends React.Component {
 		localStorage.removeItem(spot[0].id);
 
 		var index = this.state.spots.indexOf(spot);
-		console.log(index);
 		var array = this.state.spots;
 		array.splice(index, 1);
-		console.log(array);
 		this.setState({
 			spots: array
 		});

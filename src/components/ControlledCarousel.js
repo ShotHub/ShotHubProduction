@@ -1,12 +1,13 @@
 import React from 'react';
 import { Carousel } from 'react-bootstrap';
 
+
 export function ControlledCarousel(props) {
 	return (
 		<Carousel.Item className={props.className}>
 			<div className="overlay">
-				<img className="card-img"
-					alt=""
+				<img className="card-img "
+					alt="" 
 					src={
 						//constructing a link to the image of the first photo in the spot array
 						'https://farm' +
@@ -19,6 +20,7 @@ export function ControlledCarousel(props) {
 						props.photo.secret +
 						'.jpg'
 					}
+					onError={(e) => e.target.src='https://blog.stylingandroid.com/wp-content/themes/lontano-pro/images/no-image-slide.png' }
 				/>
 			</div>
 			<Carousel.Caption>

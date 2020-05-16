@@ -13,33 +13,20 @@ export function MainNav() {
 				<Container>
 					<Link to="/feed">
 						<span className="navText">Feed</span>
-						<span className="navIconSearch">
-							<MdCollections />
-						</span>
 					</Link>
 					<Link to="/map">
 						<span className="navText">Map</span>
-						<span className="navIconSearch">
-							<MdMap />
-						</span>
 					</Link>
-					<a>
+					<Link to="/">
 						<span className="navText">
 							<img className="logoNav justify-content-center" src={LogoDark} alt="ShotHub" />
 						</span>
-					</a>
+					</Link>
 					<Link to="/search">
 						<span className="navText">Search</span>
-						<span className="navIconSearch">
-							<MdSearch />
-						</span>
 					</Link>
 					<Link to="/saved">
 						<span className="navText">Saved</span>{' '}
-						{/*Using spans to show/hide text/icons based on the size of the viewport */}
-						<span className="navIconAbout">
-							<MdFavorite />
-						</span>
 					</Link>
 				</Container>
 			</Navbar>

@@ -13,7 +13,14 @@ body {
 	height: 100%;
 	margin: 0px;
 	padding: 0px;
-	overflow-x: hidden;
+}
+
+body {
+	overflow-x: visible;
+}
+
+html {
+	overflow-y: scroll;
 }
 
 .header {
@@ -25,12 +32,22 @@ body {
 }
 
 .popupImg {
-	min-width: 14vw;
-	max-width: 15vw;
+	min-width: 25vw;
+	max-width: 26vw;
 }
 
 .leaflet-popup .leaflet-popup-content-wrapper .leaflet-popup-content {
 	width: auto !important;
+}
+
+.navWrapper {
+	height: 100vh;
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left:0;
+	right:0;
+	z-index: 3000;
 }
 
 .overlay-text {
@@ -61,6 +78,19 @@ body {
 	border: none;
 	padding: 0 !important;
 	cursor: pointer;
+}
+
+.homeButton {
+	color: white;
+	background: none !important;
+	border: none;
+	padding: 0 !important;
+	cursor: pointer;
+	font-size: 3rem;
+	margin-top: 89vh !important;
+	z-index: 9999;
+	position: relative;
+	left: auto; right: auto;
 }
 
 .leaflet-div-icon {
@@ -101,10 +131,10 @@ body {
 	border-bottom: none !important;
 	border-top: 1.5px solid var(--color-one) !important;
 	max-height: 15vh !important;
- 	flex-wrap: nowrap;
-  	justify-content: center !important;
+	flex-wrap: nowrap;
+	justify-content: center !important;
 	max-height: 9vh !important;
-  	min-height: 8vh !important;
+	min-height: 8vh !important;
 	background-color: white;
 	display: flex;
 	align-items: center;
@@ -137,9 +167,85 @@ body {
 	justify-content: center;
 }
 
+.homeLogo {
+	position: absolute;
+	text-align: center;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	margin-bottom: 10vh;
+	margin-top: 10vh;
+	margin: auto;
+	max-width: 45vh;
+	z-index: 5000;
+}
+
 .containerMain {
 	position: absolute;
 	text-align: center;
+	top: 8vh;
+	background: white;
+	height: 100%;
+	position: relative;
+	text-align: center;
+	min-height: 92vh;
+}
+
+.containerHome {
+	position: absolute;
+	text-align: center;
+	height: 100%;
+	position: relative;
+	text-align: center;
+	min-height: 100vh;
+	background-repeat: no-repeat;
+	background-size: cover;
+	
+}
+
+#homeDiv1 {
+	background-image: url('../src/images/background4.jpg');
+	z-index: 4999;
+}
+
+#homeDiv2 {
+	background-color: var(--color-one);
+	color:white !important;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+}
+
+#homeDiv3 {
+	background-color: white;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.homeCarouselImg {
+	object-fit: cover;
+}
+
+#homeh2 {
+	
+	margin: auto;
+	color: white !important;
+	font-size: 3rem !important;
+	
+}
+
+
+.carouselHome {
+	height:inherit;
+	width: inherit;
+}
+
+.carouselHomeImg{
+	min-height: 92vh;
+	min-width:100vw;
 }
 
 .saveButton:focus {
@@ -175,19 +281,19 @@ a {
 	color: var(--color-one) !important;
 }
 
+.outerCarousel {
+	justify-items: center;
+}
+
 /*Big Screens*/
 @media (min-width: 992px) {
-	.nav2 {
-		display: none;
-	}
-
 	.mainNav {
 		height: 8vh !important;
-  }
-  .nav2{
-    display: none !important;
-  }
-  
+	}
+	.nav2 {
+		display: none !important;
+	}
+
 	.logo {
 		width: 30%;
 		height: auto;
@@ -280,7 +386,7 @@ a {
 	}
 	.card {
 		max-width: 50vw !important;
-		margin:0;
+		margin: 0;
 	}
 }
 
@@ -299,9 +405,9 @@ a {
 	}
 
 	.nav2 {
-	display: flex;
-	bottom: 0 !important;
-    z-index: 3000;
+		display: flex;
+		bottom: 0 !important;
+		z-index: 3000;
 	}
 
 	.popupImg {
@@ -368,13 +474,13 @@ a {
 		margin-bottom: 0 !important;
 	}
 
-  .mainNav{
-    display: none !important;
-  }
+	.mainNav {
+		display: none !important;
+	}
 
-  .check {
-	  margin-bottom: 7vh;
-  }
+	.check {
+		margin-bottom: 7vh;
+	}
 }
 
 .savedHeading {
@@ -390,12 +496,12 @@ a {
 	}
 
 	.nav2 a {
-    display: inline-block !important
-  }
+		display: inline-block !important;
+	}
 
-  .mainNav{
-    display: none !important;
-  }
+	.mainNav {
+		display: none !important;
+	}
 	.popupImg {
 		min-width: 55vw;
 		max-width: 60vw;
@@ -493,6 +599,7 @@ a {
 
 img {
 	max-height: 50vh;
+	max-width: 100%;
 }
 
 svg {
@@ -519,6 +626,15 @@ svg {
 	border-color: var(--color-one) !important;
 }
 
+.spinner-border {
+	color: var(--color-one) !important;
+}
+
+.feed-spinner {
+	text-align: center;
+	margin-top: 30vh;
+}
+
 .cover {
 	position: fixed;
 	padding: 0;
@@ -528,15 +644,6 @@ svg {
 	width: 100%;
 	height: 100%;
 	background-color: #eae9e9;
-}
-
-.containerMain {
-	top: 8vh;
-	background: white;
-	height: 100%;
-	position: relative;
-	text-align: center;
-	min-height: 92vh;
 }
 
 .mainNav a {
