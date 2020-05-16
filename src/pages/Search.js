@@ -2,6 +2,7 @@ import React from 'react';
 import Container from 'react-bootstrap/Container';
 import { Form, Col, Button } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
+import {MdLocationSearching, MdSearch} from 'react-icons/md'
 
 class Search extends React.Component {
 	constructor(props) {
@@ -22,6 +23,7 @@ class Search extends React.Component {
 				//pass data back to App.js
 				this.props.handler(position.coords.latitude, position.coords.longitude),
 		);
+		this.props.history.push('/feed');
 	};
 	
 
@@ -56,14 +58,14 @@ class Search extends React.Component {
 	//calls position when the page is loaded
 	componentDidMount(){
 		document.title = 'ShotHub | Search';
-		this.position();
+		//this.position();
 	} 
 
 	render() {
 		return (
 			<Container className="containerMain">	
 				<h2>Search</h2>
-				<p>Enter your postcode or share your current location to search for spots!<br /> Once done, return home to see your search results</p>
+				<p>Enter your postcode to search for spots!</p>
 				<Form justify-content="center" className="pt-2" onSubmit={this.handleSubmit}>
 					<Form.Row>
 						<Form.Group as={Col} sm={{span:6, offset: 4}} md ={{span: 6, offset: 3}}>
@@ -78,11 +80,16 @@ class Search extends React.Component {
 						<Form.Row>
 						<Form.Group as={Col} md={{span:2, offset:5}}>
 							<Button className="justify-content-center" variant="primary" type="Submit">
-								Search!
+								<MdSearch />
 							</Button>
 						</Form.Group>
 					</Form.Row>
 				</Form>
+				<br /> 
+				<p>Or click the button below to use your current location</p>
+				<Button variant="primary"  onClick={() => this.position()}>
+					<MdLocationSearching/>
+				</Button>
 			</Container>
 		);
 	}
