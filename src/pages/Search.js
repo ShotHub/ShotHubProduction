@@ -2,7 +2,7 @@ import React from 'react';
 import Container from 'react-bootstrap/Container';
 import { Form, Col, Button } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
-import {MdLocationSearching, MdSearch} from 'react-icons/md'
+import { MdLocationSearching, MdSearch } from 'react-icons/md';
 
 class Search extends React.Component {
 	constructor(props) {
@@ -16,16 +16,14 @@ class Search extends React.Component {
 	}
 
 	//acquire the users current location and pass it to the handler in App.js
-	
+
 	position = async () => {
-		await navigator.geolocation.getCurrentPosition(
-			(position) =>
-				//pass data back to App.js
-				this.props.handler(position.coords.latitude, position.coords.longitude),
+		await navigator.geolocation.getCurrentPosition((position) =>
+			//pass data back to App.js
+			this.props.handler(position.coords.latitude, position.coords.longitude)
 		);
 		this.props.history.push('/feed');
 	};
-	
 
 	//handles when the text box is edited, storing it in state
 	changeHandler = (event) => {
@@ -52,43 +50,42 @@ class Search extends React.Component {
 			})
 			.catch(function(err) {
 				console.log(err);
+				alert("Please enter a valid UK Postcode")
 			});
 	};
 
 	//calls position when the page is loaded
-	componentDidMount(){
+	componentDidMount() {
 		document.title = 'ShotHub | Search';
 		//this.position();
-	} 
+	}
 
 	render() {
 		return (
-			<Container className="containerMain">	
+			<Container className="containerMain">
 				<h2>Find your next photo</h2>
 				<p>Enter your postcode to search for spots!</p>
-				<Form justify-content="center" className="pt-2" onSubmit={this.handleSubmit}>
+				<Form justify-content="center" onSubmit={this.handleSubmit}>
 					<Form.Row>
-						<Form.Group as={Col} sm={{span:6, offset: 4}} md ={{span: 6, offset: 3}}>
+						<Col md={{ span: 5, offset: 3 }} xs={{span: 8, offset: 1}}>
 							<Form.Control
 								type="postcode"
 								placeholder="Enter a postcode..."
 								value={this.state.postcode}
 								onChange={this.changeHandler}
 							/>
-						</Form.Group>
-						</Form.Row>
-						<Form.Row>
-						<Form.Group as={Col} md={{span:2, offset:5}}>
+						</Col>
+						<Col md={1} xs={2}>
 							<Button className="justify-content-center" variant="primary" type="Submit">
 								<MdSearch />
 							</Button>
-						</Form.Group>
+						</Col>
 					</Form.Row>
 				</Form>
-				<br /> 
-				<p>Or click the button below to use your current location</p>
-				<Button variant="primary"  onClick={() => this.position()}>
-					<MdLocationSearching/>
+				<br />
+				<p>Or click below to use your current location</p>
+				<Button variant="primary" onClick={() => this.position()}>
+					<MdLocationSearching />
 				</Button>
 			</Container>
 		);
