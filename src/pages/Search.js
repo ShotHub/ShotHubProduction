@@ -64,7 +64,7 @@ class Search extends React.Component {
 	render() {
 		return (
 			<Container className="containerMain">	
-				<h2>Search</h2>
+				<h2>Find your next photo</h2>
 				<p>Enter your postcode to search for spots!</p>
 				<Form justify-content="center" className="pt-2" onSubmit={this.handleSubmit}>
 					<Form.Row>

@@ -3,6 +3,7 @@ import { Row, Col, Card, Carousel, Container } from 'react-bootstrap';
 import { MdFavoriteBorder } from 'react-icons/md';
 import { ControlledCarousel } from '../components/ControlledCarousel';
 import { Spinner } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 export class Feed extends React.Component {
 	constructor(props) {
@@ -10,29 +11,35 @@ export class Feed extends React.Component {
 
 		this.state = {
 			photo: [],
-			mounted: false,
-			disabledButtons: [],
+			update: 0
 		};
 	}
 	//setting the state to the props so that we can modify the array
 	UNSAFE_componentWillMount() {
 		this.setState({
 			spots: this.props.photo,
+			buttons: new Array(this.props.photo.length).fill(false),
 		});
 	}
 
 	//sort the spots from closest to furthest away
 	handleSpot(spot) {
-		var index = this.state.spots.indexOf(spot);
-
-		localStorage.setItem(spot[0].id, JSON.stringify(spot));
-		this.setState(prevState => {
-			const newDisabledButtons = [...prevState.disabledButtons];
-			newDisabledButtons[index] = true;
-			return {
-				disabledButtons: newDisabledButtons,
-			}
+		if (localStorage.getItem(spot[0].id) === null) {
+			localStorage.setItem(spot[0].id, JSON.stringify(spot));
+		} else {
+			localStorage.removeItem(spot[0].id);
+		}
+		this.setState({
+			update: this.state.update+1
 		})
+	}
+	
+	checkSaved(spot) {
+		if (!localStorage.getItem(spot[0].id)) {
+			return '#2980b9';
+		} else {
+			return 'red';
+		}
 	}
 
 	sortDist = () => {
@@ -50,18 +57,14 @@ export class Feed extends React.Component {
 
 	componentDidMount() {
 		document.title = 'ShotHub | Feed';
-		this.setState({
-			disabledButtons: Array(this.props.photo.length).fill(false),
-		})
 	}
 
 	render() {
 		return (
 			<Container className="containerMain">
-				{this.props.lat ? (
-					this.props.isLoading ? (
-						<Spinner className="feed-spinner" animation="border" variant="primary" />
-					) : (
+				{this.props.lat ? this.props.isLoading ? (
+					<Spinner className="feed-spinner" animation="border" variant="primary" />
+				) : (
 					<div>
 						<Row className="mainHeader">
 							<Col md={6} className="left">
@@ -92,8 +95,7 @@ export class Feed extends React.Component {
 								//mapping each picture to a card which takes up a third of the screen on pc and 100% of the screen on mobile
 								return (
 									<Card as={Col} key={i} md={6} lg={3} sm={12}>
-										{(() => { 
-											
+										{(() => {
 											return (
 												<Carousel fade="true" interval="100000000000000000">
 													{spot.map((photo, k) => {
@@ -126,7 +128,7 @@ export class Feed extends React.Component {
 												<br />
 												<button
 													ref={this.btn}
-													disabled = {this.state.disabledButtons[i]}
+													style={{'color': this.checkSaved(this.props.photo[i])}}
 													className="saveButton menuButton"
 													onClick={() => this.handleSpot(this.props.photo[i])}
 												>
@@ -138,14 +140,15 @@ export class Feed extends React.Component {
 								);
 							})}
 						</Row>
-
 					</div>
-					)
 				) : (
 					<div>
 						<br />
 						<br />
-						<h4>Please search to view your feed</h4>
+						<h2>Your need to search to view the feed!</h2>
+						<h4>
+							Go to <Link to="/search">Search</Link>
+						</h4>
 					</div>
 				)}
 			</Container>

@@ -1,7 +1,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar from 'react-bootstrap/Navbar';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import LogoDark from '../images/Logo-Blue.png';
 import { MdFavorite, MdSearch, MdMap, MdCollections } from 'react-icons/md';
@@ -11,23 +11,23 @@ export function MainNav() {
 		<div>
 			<Navbar expand="sm" className="mb-0 mainNav">
 				<Container>
-					<Link to="/feed">
+					<NavLink to="/feed" activeClassName="mainNavActive">
 						<span className="navText">Feed</span>
-					</Link>
-					<Link to="/map">
+					</NavLink>
+					<NavLink to="/map" activeClassName="mainNavActive">
 						<span className="navText">Map</span>
-					</Link>
-					<Link to="/">
+					</NavLink>
+					<NavLink to="/">
 						<span className="navText">
 							<img className="logoNav justify-content-center" src={LogoDark} alt="ShotHub" />
 						</span>
-					</Link>
-					<Link to="/search">
+					</NavLink>
+					<NavLink to="/search" activeClassName="mainNavActive">
 						<span className="navText">Search</span>
-					</Link>
-					<Link to="/saved">
+					</NavLink>
+					<NavLink to="/saved" activeClassName="mainNavActive">
 						<span className="navText">Saved</span>{' '}
-					</Link>
+					</NavLink>
 				</Container>
 			</Navbar>
 		</div>

@@ -2,6 +2,7 @@ import React from 'react';
 import { Carousel, Container } from 'react-bootstrap';
 import { ControlledCarousel } from '../components/ControlledCarousel';
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
+import {Link} from 'react-router-dom';
 
 export class MapPage extends React.Component {
 	constructor(props) {
@@ -73,9 +74,12 @@ export class MapPage extends React.Component {
 					</Map>
 				) : (
 					<Container className="containerMain">
-                    <br />
-                    <br />
-						<h4>Please search to use the Map</h4>
+                    <div>
+						<br />
+						<br />
+						<h2>Your need to search to view the map!</h2>
+						<h4>Go to <Link to="/search">Search</Link></h4>
+					</div>
 					</Container>
 				)}
 			</div>

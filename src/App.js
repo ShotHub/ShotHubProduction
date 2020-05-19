@@ -73,7 +73,7 @@ class App extends React.Component {
 
 		this.setState({
 			spots: spots,
-			isLoading: false
+			isLoading: false,
 		});
 
 		console.log('state.spots: ' + this.state.spots);
