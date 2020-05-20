@@ -1,7 +1,8 @@
 import React from 'react';
-import { Container, Col, Row, Carousel, Card } from 'react-bootstrap';
+import { Container, Col, Row, Carousel, Card, Button } from 'react-bootstrap';
 import { ControlledCarousel } from '../components/ControlledCarousel';
 import { MdDeleteForever } from 'react-icons/md';
+import { Link } from 'react-router-dom';
 
 export class Saved extends React.Component {
 	constructor(props) {
@@ -94,7 +95,17 @@ export class Saved extends React.Component {
 							})}
 						</Row>
 					) : (
-						<h4 className="savedHeading">You don't have any saved spots!</h4>
+						<div className="noSaved">
+						<br />
+						<img src={require('../images/undraw_location_review_dmxd.svg')} alt="" />
+						<br />
+						<br />
+						<br />
+						<h5>
+							ShotHub allows photographers to save their favourite photo spots!<br />
+							Save some spots to get started!
+						</h5>
+					</div>
 					)}
 				</div>
 			</Container>

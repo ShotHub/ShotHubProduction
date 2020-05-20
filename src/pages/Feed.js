@@ -1,6 +1,6 @@
 import React from 'react';
-import { Row, Col, Card, Carousel, Container } from 'react-bootstrap';
-import { MdFavoriteBorder } from 'react-icons/md';
+import { Row, Col, Card, Carousel, Container, Button, Pagination } from 'react-bootstrap';
+import { MdFavoriteBorder, MdNavigateNext, MdNavigateBefore } from 'react-icons/md';
 import { ControlledCarousel } from '../components/ControlledCarousel';
 import { Spinner } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
@@ -18,7 +18,7 @@ export class Feed extends React.Component {
 	UNSAFE_componentWillMount() {
 		this.setState({
 			spots: this.props.photo,
-			buttons: new Array(this.props.photo.length).fill(false),
+			buttons: new Array(this.props.photo.length).fill(false)
 		});
 	}
 
@@ -30,10 +30,10 @@ export class Feed extends React.Component {
 			localStorage.removeItem(spot[0].id);
 		}
 		this.setState({
-			update: this.state.update+1
-		})
+			update: this.state.update + 1
+		});
 	}
-	
+
 	checkSaved(spot) {
 		if (!localStorage.getItem(spot[0].id)) {
 			return '#2980b9';
@@ -128,7 +128,7 @@ export class Feed extends React.Component {
 												<br />
 												<button
 													ref={this.btn}
-													style={{'color': this.checkSaved(this.props.photo[i])}}
+													style={{ color: this.checkSaved(this.props.photo[i]) }}
 													className="saveButton menuButton"
 													onClick={() => this.handleSpot(this.props.photo[i])}
 												>
@@ -140,15 +140,32 @@ export class Feed extends React.Component {
 								);
 							})}
 						</Row>
+
+						<Row className="pagination pt-2">
+							<Pagination>
+								<Pagination.Prev onClick={this.props.loadPrev} />
+								<Pagination.Item active>{this.props.pageNo}</Pagination.Item>
+								<Pagination.Next onClick={this.props.loadMore} />
+							</Pagination>
+						</Row>
 					</div>
 				) : (
 					<div>
 						<br />
+						<img src={require('../images/undraw_current_location_rypt.svg')} alt="" />
 						<br />
-						<h2>Your need to search to view the feed!</h2>
-						<h4>
-							Go to <Link to="/search">Search</Link>
-						</h4>
+						<br />
+						<br />
+						<h5>
+							ShotHub allows photographers to find the best nearby photo spots,<br />
+							but you need to search first!
+						</h5>
+						<br />
+						<Link to="/search" className="noSearchButton">
+							<Button variant="primary">
+								<h4 className="pt-0">Go to Search</h4>
+							</Button>
+						</Link>
 					</div>
 				)}
 			</Container>

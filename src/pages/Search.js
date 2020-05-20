@@ -87,6 +87,12 @@ class Search extends React.Component {
 				<Button variant="primary" onClick={() => this.position()}>
 					<MdLocationSearching />
 				</Button>
+<br />
+<br />
+<br />
+				<img src={require('../images/undraw_my_location_f9pr.svg')} alt="" style={{"alignSelf": "end"}}/>
+
+
 			</Container>
 		);
 	}

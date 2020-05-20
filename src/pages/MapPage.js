@@ -1,7 +1,7 @@
 import React from 'react';
-import { Carousel, Container } from 'react-bootstrap';
+import { Carousel, Container, Button } from 'react-bootstrap';
 import { ControlledCarousel } from '../components/ControlledCarousel';
-import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
+import { Map, TileLayer, Marker, Popup, Circle } from 'react-leaflet';
 import {Link} from 'react-router-dom';
 
 export class MapPage extends React.Component {
@@ -74,11 +74,22 @@ export class MapPage extends React.Component {
 					</Map>
 				) : (
 					<Container className="containerMain">
-                    <div>
+					<div>
+						<br />
+						<img src={require('../images/undraw_location_search_bqps.svg')} alt="" />
 						<br />
 						<br />
-						<h2>Your need to search to view the map!</h2>
-						<h4>Go to <Link to="/search">Search</Link></h4>
+						<br />
+						<h5>
+							ShotHub allows photographers to find the best nearby photo spots,<br />
+							but you need to search first!
+						</h5>
+						<br />
+						<Button variant="primary">
+							<Link to="/search" className="noSearchButton">
+								<h4 className="pt-0">Go to Search</h4>
+							</Link>
+						</Button>
 					</div>
 					</Container>
 				)}

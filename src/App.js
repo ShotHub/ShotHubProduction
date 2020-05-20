@@ -18,7 +18,8 @@ class App extends React.Component {
 			lon: null,
 			photos: [],
 			spots: [],
-			isLoading: false
+			isLoading: false,
+			page: 1
 		};
 	}
 
@@ -55,13 +56,11 @@ class App extends React.Component {
 		for (var i = 0; i < this.state.photos.length; i++) {
 			let temp = [];
 			for (var k = i + 1; k < this.state.photos.length; k++) {
+				var distance = this.getDistance(this.state.photos[i].lat, this.state.photos[i].lon, this.state.photos[k].lat, this.state.photos[k].lon);
+
 				if (
-					//if the lat and lon are within 0.002 either side of the point, they will both be added to the spot
-					//0.002 is an arbitrary number, it was just what I felt created the best "spots"
-					this.state.photos[i].lat > this.state.photos[k].lat - 0.003 &&
-					this.state.photos[i].lat < this.state.photos[k].lat + 0.003 &&
-					this.state.photos[i].lon > this.state.photos[k].lon - 0.003 &&
-					this.state.photos[i].lon < this.state.photos[k].lon + 0.003
+					//if the distance between the two spots is less than or equal to 0.5, add them both to a spot
+					distance <= 1
 				) {
 					temp.push(this.state.photos[k]);
 					this.state.photos.splice(k, 1);
@@ -73,16 +72,37 @@ class App extends React.Component {
 
 		this.setState({
 			spots: spots,
-			isLoading: false,
+			isLoading: false
 		});
 
 		console.log('state.spots: ' + this.state.spots);
 	}
 
+	loadMore() {
+		this.setState({
+			page: this.state.page + 1,
+			photos: [],
+			spots: []
+		});
+
+		this.callApi();
+	}
+
+	loadPrev() {
+		if (this.state.page > 1) {
+			this.setState({
+				page: this.state.page - 1,
+				photos: [],
+				spots: []
+			});
+			this.callApi();
+		}
+	}
+
 	callApi = async () => {
 		console.log('call api');
 		const flickr = new Flickr('9ba1c445f9135aecfdaaef4d933b008e');
-		const per_page = 249; //use this value to set the number of photos to search for
+		const per_page = 150; //use this value to set the number of photos to search for
 
 		var number = 1;
 
@@ -101,7 +121,7 @@ class App extends React.Component {
 						content_type: '1',
 						safe_search: '1',
 						per_page: per_page,
-						page: 1
+						page: this.state.page
 					})
 					.then((res) => {
 						//using the response to get the location of each individual phot
@@ -173,6 +193,9 @@ class App extends React.Component {
 								photo={this.state.spots}
 								callApi={() => this.callApi()}
 								isLoading={this.state.isLoading}
+								loadMore={() => this.loadMore()}
+								loadPrev={() => this.loadPrev()}
+								pageNo={this.state.page}
 							/>
 						</Route>
 					</Switch>

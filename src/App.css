@@ -38,6 +38,18 @@ html {
 	background-color: #eae9e9 !important;
 }
 
+.page-item.active .page-link {
+	background-color: var(--color-one);
+	border-color: var(--color-one);
+}
+
+.pagination {
+	display: flex;
+	justify-items: center;
+	align-items: center;
+	background-color: #eae9e9;
+}
+
 /*Leaflet map styling */
 
 .map {
@@ -271,6 +283,14 @@ html {
 	width: inherit;
 }
 
+.noSearchButton {
+	color: white !important
+}
+
+.noSaved {
+	height: 80vh;
+	background-color: white;
+}
 .homeButton {
 	color: white;
 	background: none !important;
@@ -541,8 +561,9 @@ a {
 		display: none !important;
 	}
 
-	.check {
-		margin-bottom: 7vh;
+	.pagination {
+		margin-bottom: 5vh;
+		background-color: white;
 	}
 
 
@@ -661,8 +682,9 @@ a {
 		bottom: 8vh !important;
 		margin-top: 0 !important;
 	}
-	.check {
+	.pagination {
 		margin-bottom: 7vh;
+		background-color: white !important;
 	}
 	.popupImg{
 		min-width: 70vw;
