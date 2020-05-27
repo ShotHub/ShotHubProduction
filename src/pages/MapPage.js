@@ -1,7 +1,7 @@
 import React from 'react';
 import { Carousel, Container, Button } from 'react-bootstrap';
 import { ControlledCarousel } from '../components/ControlledCarousel';
-import { Map, TileLayer, Marker, Popup, Circle } from 'react-leaflet';
+import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
 import {Link} from 'react-router-dom';
 
 export class MapPage extends React.Component {
@@ -15,6 +15,7 @@ export class MapPage extends React.Component {
 		};
 	}
 
+	//set state lat and lng to the props lat and lng
 	UNSAFE_componentWillMount() {
 		this.setState({
 			lng: this.props.lng,
@@ -40,6 +41,7 @@ export class MapPage extends React.Component {
 
 						{this.props.spots.map((spot, i) => {
 							return (
+								/* put a pin on the map for each photo spot */
 								<Marker key={i} position={[ spot[0].lat, spot[0].lon ]}>
 									<Popup>
 										{(() => {

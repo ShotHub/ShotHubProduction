@@ -1,15 +1,10 @@
 import React from 'react';
-import { Container, Carousel, Card, Col } from 'react-bootstrap';
-import homeSpots from '../components/homeSpots.json';
-import { ControlledCarousel } from '../components/ControlledCarousel';
-import background4 from '../images/background4.jpg';
+import { Carousel} from 'react-bootstrap';
 import Logo from '../images/logo-white.png';
 import { MdKeyboardArrowDown } from 'react-icons/md';
 import FadeIn from 'react-fade-in';
-import CarouselCaption from 'react-bootstrap/CarouselCaption';
 import {Link} from 'react-router-dom';
 var Scroll = require('react-scroll');
-var scroll = Scroll.animateScroll;
 var scroller = Scroll.scroller;
 
 export class Home extends React.Component {
@@ -17,6 +12,7 @@ export class Home extends React.Component {
 		document.title = 'ShotHub | Home';
 	}
 
+	//handles the first scroll button
 	scrollHandler() {
 		scroller.scrollTo('scrollTo', {
 			duration: 1000,
@@ -24,6 +20,7 @@ export class Home extends React.Component {
 		});
 	}
 
+	//handles the second scroll button
 	scrollHandler2() {
 		scroller.scrollTo('scrollTo2', {
 			duration: 1000,
@@ -32,6 +29,7 @@ export class Home extends React.Component {
 	}
 
 	render() {
+		//images used in carousel
 		const images = [
 			[ 'https://live.staticflickr.com/5549/31018313350_7d76655473_h.jpg', 'Roman Baths, Bath' ],
 			[ 'https://live.staticflickr.com/4468/37352372540_5a09d007f5_h.jpg', 'Winchester Cathedral, Winchester' ],
@@ -76,73 +74,3 @@ export class Home extends React.Component {
 		);
 	}
 }
-
-/*
-<br />
-				<h5>
-					ShotHub is a tool designed <br />
-					to help photographers find popular <br />
-					nearby photo spots.<br />
-					<br />
-					<br />
-					Go to Search to find your own spots!
-				</h5>
-				<h2>Our Favourite Spots</h2>
-
-
-
-
-
-
-<div className="outerCarousel">
-					<Carousel
-						className="outerCarousel"
-						pause="hover"
-						controls={false}
-						interval="5000"
-						indicators="false"
-					>
-						{homeSpots.map((spot, i) => {
-							return (
-								<Carousel.Item>
-									<Card key={i}>
-										{(() => {
-											return (
-												<Carousel
-													className="innerCarousel"
-													fade="true"
-													interval="100000000000000000"
-												>
-													{spot.map((photo, k) => {
-														let className;
-														if (photo === homeSpots[0]) {
-															className = 'active';
-														} else {
-															className = '';
-														}
-														return (
-															<ControlledCarousel
-																as={Col}
-																md={{ span: 8, offset: 3 }}
-																sm={12}
-																key={k}
-																photo={photo}
-																className={className}
-															/>
-														);
-													})}
-												</Carousel>
-											);
-										})()}
-
-										<Card.Body>
-											<Card.Title>Hello</Card.Title>
-											<Card.Text>Hello</Card.Text>
-										</Card.Body>
-									</Card>
-								</Carousel.Item>
-							);
-						})}
-					</Carousel>
-				</div>
-				*/

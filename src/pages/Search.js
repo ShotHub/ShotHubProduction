@@ -10,14 +10,12 @@ class Search extends React.Component {
 
 		this.state = {
 			postcode: '',
-			response: null,
-			update: ''
 		};
 	}
 
 	//acquire the users current location and pass it to the handler in App.js
 
-	position = async () => {
+	position = async () => { 
 		await navigator.geolocation.getCurrentPosition((position) =>
 			//pass data back to App.js
 			this.props.handler(position.coords.latitude, position.coords.longitude)
@@ -40,15 +38,10 @@ class Search extends React.Component {
 		await fetch('https://api.getthedata.com/postcode/' + postcode)
 			.then((res) => res.json())
 			.then((res) => {
-				//console.log(res.body.data.latitude)
-				this.setState({
-					response: res
-				});
-
 				this.props.handler(JSON.parse(res.data.latitude), JSON.parse(res.data.longitude));
 				this.props.history.push('/feed'); //return to the feed once the search has completed
 			})
-			.catch(function(err) {
+			.catch(function(err) { //catches if an invalid postcode is entered
 				console.log(err);
 				alert("Please enter a valid UK Postcode")
 			});

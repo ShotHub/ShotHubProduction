@@ -4,8 +4,8 @@ import Navbar from 'react-bootstrap/Navbar';
 import { NavLink } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import LogoDark from '../images/Logo-Blue.png';
-import { MdFavorite, MdSearch, MdMap, MdCollections } from 'react-icons/md';
 
+//exports the nav bar used on all screens larger than medium
 export function MainNav() {
 	return (
 		<div>

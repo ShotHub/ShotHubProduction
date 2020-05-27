@@ -1,8 +1,7 @@
 import React from 'react';
-import { Container, Col, Row, Carousel, Card, Button } from 'react-bootstrap';
+import { Container, Col, Row, Carousel, Card } from 'react-bootstrap';
 import { ControlledCarousel } from '../components/ControlledCarousel';
 import { MdDeleteForever } from 'react-icons/md';
-import { Link } from 'react-router-dom';
 
 export class Saved extends React.Component {
 	constructor(props) {
@@ -10,23 +9,22 @@ export class Saved extends React.Component {
 
 		this.state = {
 			spots: [],
-
-			log: [],
 		};
 	}
+
 
 	componentDidMount() {
 		document.title = 'ShotHub | Saved';
 		for (let i = 0; i < localStorage.length; i++) {
 			let key = localStorage.key(i);
 
-			this.setState((prevState) => ({
+			this.setState((prevState) => ({ //setting state to the spots saved in local storage
 				spots: [ ...prevState.spots, JSON.parse(localStorage.getItem(key)) ]
 			}));
 		}
 	}
 
-	handleSpot(spot) {
+	handleSpot(spot) { //removes a spot from local storage and updates state so it's reflected to the user
 		localStorage.removeItem(spot[0].id);
 
 		var index = this.state.spots.indexOf(spot);
@@ -78,7 +76,6 @@ export class Saved extends React.Component {
 												<strong>Popularity: </strong> {spot.length} photos in this spot{' '}
 												{/*Popularity is judged by the number of photos in the spot */}
 												<br />
-												{console.log(JSON.parse(JSON.stringify(spot)))}
 												<button
 													ref={(btn) => {
 														this.btn = btn;

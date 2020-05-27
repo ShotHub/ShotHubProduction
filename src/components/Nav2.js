@@ -5,6 +5,8 @@ import { NavLink } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import { MdFavorite, MdSearch, MdMap, MdCollections, MdHome } from 'react-icons/md';
 
+
+//exports the navbar used for mobile
 export function Nav2() {
 	return (
 		<div>

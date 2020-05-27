@@ -1,6 +1,6 @@
 import React from 'react';
 import { Row, Col, Card, Carousel, Container, Button, Pagination } from 'react-bootstrap';
-import { MdFavoriteBorder, MdNavigateNext, MdNavigateBefore } from 'react-icons/md';
+import { MdFavoriteBorder } from 'react-icons/md';
 import { ControlledCarousel } from '../components/ControlledCarousel';
 import { Spinner } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
@@ -22,7 +22,7 @@ export class Feed extends React.Component {
 		});
 	}
 
-	//sort the spots from closest to furthest away
+	//saves a spot to local storage
 	handleSpot(spot) {
 		if (localStorage.getItem(spot[0].id) === null) {
 			localStorage.setItem(spot[0].id, JSON.stringify(spot));
@@ -30,10 +30,11 @@ export class Feed extends React.Component {
 			localStorage.removeItem(spot[0].id);
 		}
 		this.setState({
-			update: this.state.update + 1
+			update: this.state.update + 1 //update state to refresh the dom
 		});
 	}
 
+	//checking if a spot is in local storage, and changes the colour of the 'heart' icon accordingly
 	checkSaved(spot) {
 		if (!localStorage.getItem(spot[0].id)) {
 			return '#2980b9';
@@ -42,6 +43,7 @@ export class Feed extends React.Component {
 		}
 	}
 
+	//sort the spots from closest to furthest away
 	sortDist = () => {
 		this.setState({
 			photo: this.props.photo.sort((a, b) => parseFloat(a[0].distance) - parseFloat(b[0].distance))

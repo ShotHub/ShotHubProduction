@@ -37,6 +37,7 @@ class App extends React.Component {
 		);
 	};
 
+	//function that calculate the distance between two pairs of lat/lon
 	getDistance(lat, lon, destLat, destLon) {
 		var radius = 6371; //radius of earth in km
 		var dLat = (destLat - lat) * Math.PI / 180;
@@ -51,7 +52,7 @@ class App extends React.Component {
 	}
 
 	//loop through the array of photos and compare each photo's lat and lon against each other
-	generateSpots(num) {
+	generateSpots() {
 		let spots = [];
 		for (var i = 0; i < this.state.photos.length; i++) {
 			let temp = [];
@@ -60,7 +61,7 @@ class App extends React.Component {
 
 				if (
 					//if the distance between the two spots is less than or equal to 0.5, add them both to a spot
-					distance <= 1
+					distance <= 0.5
 				) {
 					temp.push(this.state.photos[k]);
 					this.state.photos.splice(k, 1);
@@ -78,6 +79,7 @@ class App extends React.Component {
 		console.log('state.spots: ' + this.state.spots);
 	}
 
+	//function that handles pagination (next page)
 	loadMore() {
 		this.setState({
 			page: this.state.page + 1,
@@ -88,6 +90,7 @@ class App extends React.Component {
 		this.callApi();
 	}
 
+	//function that handles pagination (next page)
 	loadPrev() {
 		if (this.state.page > 1) {
 			this.setState({
@@ -99,16 +102,14 @@ class App extends React.Component {
 		}
 	}
 
+	//function that handles Flickr API calls
 	callApi = async () => {
-		console.log('call api');
 		const flickr = new Flickr('9ba1c445f9135aecfdaaef4d933b008e');
 		const per_page = 150; //use this value to set the number of photos to search for
 
-		var number = 1;
-
 		this.setState(
 			{
-				isLoading: true
+				isLoading: true //set state to loading so the spinner is displayed on the feed
 			},
 			() => {
 				flickr.photos //searching for photos near the inputted latitude and longitude
@@ -151,7 +152,7 @@ class App extends React.Component {
 
 									//only generate spots when the length of the photos array is equal to the number of photos we searched the API for
 									if (this.state.photos.length === per_page) {
-										this.generateSpots(number);
+										this.generateSpots();
 									}
 								})
 								//catch any errors
